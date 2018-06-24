@@ -1,0 +1,45 @@
+.CreateEntry {
+    text-align: center;
+}
+
+/* Grid for Time */
+
+.CreateEntry .time {
+    display: grid;
+    grid-template-columns: 30% 30% 30% 10%;
+    width: 250px;
+    margin: 0 auto;
+}
+
+/* TimePicker */
+
+div.CreateEntry>form>div.time>div>span>input {
+    width: 60px;
+    color: black;
+}
+
+.rc-time-picker-input[disabled] {
+    background: rgb(235,235,228);
+    text-decoration: line-through;
+}
+
+div.rc-time-picker-panel-combobox>div {
+    overflow-x: hidden;
+}
+
+/* Checkbox */
+
+.CreateEntry .checkbox {
+    align-self: end;
+    margin-bottom: 5px;
+}
+
+.CreateEntry .checkbox input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+}
+
+/* Hours */
+.CreateEntry input[type="number"]{
+    width:50px;
+}

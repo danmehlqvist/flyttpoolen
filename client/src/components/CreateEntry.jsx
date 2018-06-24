@@ -1,0 +1,223 @@
+// Todo!!! Have made some very weird calculations about setting the break times. Why not just do end-start-break?
+
+import React, { Component } from 'react'
+import moment from 'moment';
+import 'moment/locale/sv';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import TimePicker from 'rc-time-picker';
+import 'rc-time-picker/assets/index.css';
+
+import './CreateEntry.css';
+
+
+class CreateEntry extends Component {
+
+    state = {
+        date: moment().hours(7).minute(30),
+        start: moment().hours(7).minute(30),
+        end: moment().hours(10).minute(30),
+        break: moment().hours(0).minute(30),
+        editTimes: true,
+        hours: 2.5,
+        customer: '',
+        comments: '',
+        errors: {}
+    }
+
+    render() {
+
+
+
+        return (
+            <div className="CreateEntry">
+                <h1>Rapportera jobb</h1>
+                <form onSubmit={this.onSubmit} autoComplete="flyttpoolen">
+                    <div className="label">Datum</div>
+                    <DatePicker
+                        selected={this.state.date}
+                        locale="sv"
+                        onChange={this.onChangeDate}
+                        value={this.state.date.format("YYYY-MM-DD")}
+                    />
+                    <div className="time">
+                        <div>
+                            <p>Start-tid</p>
+                            <TimePicker
+                                allowEmpty={false}
+                                className="TimePicker"
+                                minuteStep={30}
+                                showSecond={false}
+                                onChange={this.onChangeStart}
+                                // onChange={this.onChangeHoursCalc}
+                                value={this.state.start}
+                                disabled={!this.state.editTimes}
+                                name="start"
+                            />
+                        </div>
+
+                        <div>
+                            <p>Slut-tid</p>
+                            <TimePicker
+                                allowEmpty={false}
+                                className="TimePicker"
+                                minuteStep={30}
+                                showSecond={false}
+                                onChange={this.onChangeEnd}
+                                // onChange={this.onChangeHoursCalc}
+                                value={this.state.end}
+                                disabled={!this.state.editTimes}
+                                name="end"
+                            />
+                        </div>
+
+                        <div>
+                            <p>Rast</p>
+                            <TimePicker
+                                allowEmpty={false}
+                                className="TimePicker"
+                                minuteStep={30}
+                                showSecond={false}
+                                // onChange={this.onChangeHoursCalc}
+                                onChange={this.onChangeBreak}
+                                value={this.state.break}
+                                disabled={!this.state.editTimes}
+                                name="hours"
+                            />
+                        </div>
+                        <div className="checkbox">
+                            <input
+                                type="checkbox"
+                                onChange={(e) => {
+                                    if (!this.state.editTimes) {
+                                        const mins = (this.state.end - this.state.start) / 60 / 1000 - (this.state.break.hours() * 60 + this.state.break.minute());
+                                        this.setState((prevState) => ({
+                                            hours: mins / 60
+                                        }))
+                                    }
+                                    this.setState((prevState) => ({
+                                        editTimes: !prevState.editTimes
+                                    }))
+                                }}
+                            />
+                        </div>
+
+                    </div>
+
+                    <div className="label">Timmar</div>
+                    <input
+                        min="0.5"
+                        value={this.state.hours}
+                        type="number"
+                        disabled={this.state.editTimes}
+                        step="0.5"
+                        name="hours"
+                        onChange={(e) => {
+                            const value = Number(e.target.value);
+                            this.setState(() => ({
+                                hours: value
+                            }));
+                        }}
+                    />
+                    {this.state.errors.hours && <div className="erorr">{this.state.errors.hours}</div>}
+
+                    <div className="label">Kund</div>
+                    <input
+                        autoComplete='flyttpoolen'
+                        type="text"
+                        name="customer"
+                        onChange={this.onChangeCustomerOrComments}
+                    />
+
+                    <div className="label">Kommentarer</div>
+                    <textarea
+                        name="comments"
+                        onChange={this.onChangeCustomerOrComments}
+                    />
+
+                    <br /><input disabled={!this.state.customer && Object.keys(this.state.errors).length === 0} type="submit" />
+
+                </form>
+            </div>
+        )
+    }
+
+    onChangeCustomerOrComments = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState(() => ({
+            [name]: value.trim()
+        }))
+    }
+
+
+    onChangeBreak = e => {
+        const mins = (this.state.end - this.state.start) / 60 / 1000 - (e.hours() * 60 + e.minute());
+        let error = {};
+        if (mins <= 0) {
+            error.hours = "Mer rast än arbete? Bra där!";
+        }
+        this.setState((prevState) => ({
+            start: prevState.start,
+            hours: mins / 60,
+            end: prevState.end,
+            errors: error,
+            break: e
+        }));
+
+    }
+
+    onChangeStart = e => {
+        let error = {};
+        const mins = (this.state.end - e) / 60 / 1000 - (this.state.break.hours() * 60 + this.state.break.minute());
+        if (mins <= 0) {
+            error.hours = "Negativa timmar";
+        }
+        this.setState((prevState) => ({
+            start: e,
+            hours: mins / 60,
+            errors: error,
+            end: prevState.end,
+            break: prevState.break
+        }));
+    }
+
+    onChangeEnd = time => {
+        let error = {};
+
+        const mins = (time - this.state.start) / 60 / 1000 - (this.state.break.hours() * 60 + this.state.break.minute());
+        if (mins <= 0) {
+            error.hours = "Negativa timmar";
+        }
+        this.setState((prevState) => ({
+            start: prevState.start,
+            hours: mins / 60,
+            errors: error,
+            end: time,
+            break: prevState.break
+        }));
+    }
+
+    onSubmit = e => {
+        // Validation is taken care of by disabling the submit button
+        e.preventDefault();
+        const newEntry = {
+            date: Number(this.state.date),
+            hours: this.state.hours,
+            customer: this.state.customer,
+            comments: this.state.comments,
+            start: this.state.editTimes ? Number(this.state.start) : null,
+            end: this.state.editTimes ? Number(this.state.end) : null,
+            break: this.state.editTimes ? Number(this.state.break) : null
+        };
+        console.log(newEntry);
+    }
+
+    onChangeDate = date => {
+        console.log(date);
+        this.setState(() => ({
+            date
+        }));
+    }
+}
+export default CreateEntry;

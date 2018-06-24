@@ -1,0 +1,26 @@
+.BigButton {
+    display: flex;
+    justify-content: center;
+}
+
+.BigButton {
+    width: 220px;
+    padding: 20px;
+    font-size: 30px;
+    border-radius: 10px;
+    margin: 20px auto;
+    color: black;
+    background: orange;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: default;
+    border:2px solid white;
+    transition: border 0.3s, background 0.3s;
+}
+
+.BigButton:hover,
+.BigButton:active {
+    background: darkorange;
+    border:2px solid #777;
+    
+}

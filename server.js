@@ -3,8 +3,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 require('./models/User');
+require('./models/Entry');
 
 const users = require('./routes/users');
+const entries = require('./routes/entries');
 
 const app = express();
 
@@ -27,7 +29,7 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 app.use('/api/users', users);
-
+app.use('/api/entries', entries);
 
 
 const PORT = process.env.PORT || 5000;

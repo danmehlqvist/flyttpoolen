@@ -1,0 +1,10 @@
+.Footer{
+    background:black;
+    margin-top:10px;
+    /* height:100px; */
+    display:grid;
+}
+
+.Footer .BigButton {
+    align-items: center;
+}

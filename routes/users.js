@@ -40,16 +40,16 @@ router.post('/login', (req, res) => {
     }
     console.log('/login in the server');
 
-    const email = req.body.email;
+    const name = req.body.name;
     const password = req.body.password;
 
-    // Find user by email
+    // Find user by name
     User.findOne({
-        email
+        name
     }).then(user => {
 
         if (!user) {
-            errors.email = 'User not found';
+            errors.name = 'User not found';
             return res.status(404).json(errors);
         }
 
@@ -62,15 +62,15 @@ router.post('/login', (req, res) => {
                         id: user.id,
                         name: user.name
                     };
-                    console.log('payload:',payload);
-                    console.log('secretKey:',keys.secretKey)
+                    console.log('payload:', payload);
+                    console.log('secretKey:', keys.secretKey)
                     jwt.sign(
                         payload,
                         keys.secretKey, {
                             expiresIn: 3600
                         },
                         (err, token) => {
-                            console.log('token',token);
+                            console.log('token', token);
                             res.json({
                                 success: true,
                                 token: 'Bearer ' + token
@@ -102,22 +102,23 @@ router.post('/register', (req, res) => {
         errors,
         isValid
     } = validateRegisterInput(req.body);
+
     if (!isValid) {
+        console.log('Validation for user failed');
         return res.status(400).json(errors);
     }
 
     console.log('running /register in the server');
 
     User.findOne({
-        email: req.body.email
+        name: req.body.name
     }).then(user => {
         if (user) {
-            errors.email = 'Email already exists';
+            errors.name = 'User already exists';
             return res.status(400).json(errors);
-        } else { // No user found with identical email
+        } else { // No user found with identical username
             const newUser = new User({
                 name: req.body.name,
-                email: req.body.email,
                 password: req.body.password
             });
 
@@ -130,7 +131,6 @@ router.post('/register', (req, res) => {
                     newUser.save()
                         .then(user => res.json(user))
                         .catch(err => {
-                            console.log(err);
                             res.sendStatus(500); // MY OWN COMMENT!!!
                         })
                 })

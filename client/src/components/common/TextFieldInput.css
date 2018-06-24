@@ -1,0 +1,20 @@
+.TextFieldInput {
+    margin-bottom: 30px;
+}
+
+.TextFieldInput input {
+    font-size: 25px;
+}
+
+.TextFieldInput .label {
+    font-size: 20px;
+}
+
+.TextFieldInput .info {
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.TextFieldInput .error {
+    color: red;
+}

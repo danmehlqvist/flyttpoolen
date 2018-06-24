@@ -1,0 +1,13 @@
+.Header{
+    width:100%;
+    background: #1A0C0C;
+}
+
+
+.Header img {
+    display: block;
+    height: 80px;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
