@@ -18,7 +18,6 @@ const validateLoginInput = require('../validation/login');
 router.get('/current', passport.authenticate('jwt', {
     session: false
 }), (req, res) => {
-    console.log('GET /current');
     res.json({
         id: req.user.id,
         name: req.user.name,
@@ -30,7 +29,6 @@ router.get('/current', passport.authenticate('jwt', {
 // @desc    Login User / Returning token
 // @access  Public
 router.post('/login', (req, res) => {
-    console.log('GET /api/users/login');
     const {
         errors,
         isValid
@@ -38,8 +36,6 @@ router.post('/login', (req, res) => {
     if (!isValid) {
         return res.status(400).json(errors);
     }
-    console.log('/login in the server');
-
     const name = req.body.name;
     const password = req.body.password;
 
@@ -62,15 +58,12 @@ router.post('/login', (req, res) => {
                         id: user.id,
                         name: user.name
                     };
-                    console.log('payload:', payload);
-                    console.log('secretKey:', keys.secretKey)
                     jwt.sign(
                         payload,
                         keys.secretKey, {
                             expiresIn: 3600
                         },
                         (err, token) => {
-                            console.log('token', token);
                             res.json({
                                 success: true,
                                 token: 'Bearer ' + token
@@ -104,11 +97,8 @@ router.post('/register', (req, res) => {
     } = validateRegisterInput(req.body);
 
     if (!isValid) {
-        console.log('Validation for user failed');
         return res.status(400).json(errors);
     }
-
-    console.log('running /register in the server');
 
     User.findOne({
         name: req.body.name

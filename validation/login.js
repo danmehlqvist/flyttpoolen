@@ -12,8 +12,6 @@ module.exports = function validateLoginInput(data) {
         errors.password = 'Please provide a password';
     } 
 
-    console.log('validation login');
-
     return {
         errors,
         isValid: isEmpty(errors)

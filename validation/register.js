@@ -15,7 +15,7 @@ module.exports = function validateRegisterInput(data) {
     if (!data.name) {
         errors.name = 'Please provide a name';
     } else if (!Validator.isLength(data.name, {
-            min: 4,
+            min: 3,
             max: 30
         })) {
         errors.name = 'Name must be between four and 30 characters';

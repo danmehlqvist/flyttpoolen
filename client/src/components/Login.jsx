@@ -41,10 +41,12 @@ class Login extends Component {
                         buttonText="Logga in"
                         onClick={this.onSubmit}
                     />
-                    {/* <BigButton
-                        buttonText="Annan användare"
-                        onClick={this.onSubmit}
-                    /> */}
+                    <BigButton
+                        buttonText="Avbryt"
+                        onClick={()=>{
+                            this.props.history.push('/');
+                        }}
+                    />
                     <input type="submit" style={{ display: "none" }} />
                 </form>
             </div>
@@ -70,7 +72,6 @@ class Login extends Component {
                 name: this.state.name,
                 password: this.state.password
             }, this.props.history);
-            // this.props.history.push('/create-entry');
         }
     }
 

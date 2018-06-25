@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
-const EntrySchema = new Schema({
+const ReportSchema = new Schema({
+    userId: {
+        type: ObjectId,
+        isRequired: true
+    },
     date: {
-        type: String,
+        type: Number,
         isRequired: true
     },
     start: {
@@ -34,4 +39,4 @@ const EntrySchema = new Schema({
 
 });
 
-module.exports = Entry = mongoose.model('entries', EntrySchema);
+module.exports = Report = mongoose.model('reports', ReportSchema);

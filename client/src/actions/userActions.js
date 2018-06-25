@@ -50,9 +50,8 @@ export const loginUserAction = (userData, history) => dispatch => {
             };
 
             dispatch(setCurrentUserAction(userToSet));
-            history.push('/create-entry');
+            history.push('/dashboard');
         }).catch(errors => {
-            console.log('Login failed');
             dispatch({
                 type: SET_ERRORS,
                 payload: errors.response.data

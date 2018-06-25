@@ -1,4 +1,4 @@
-// Todo!!! Have made some very weird calculations about setting the break times. Why not just do end-start-break?
+// Todo!!! Have made some very weird calculations about setting the breakTime times. Why not just do end-start-break?
 
 import React, { Component } from 'react'
 import moment from 'moment';
@@ -7,8 +7,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
+import { connect } from 'react-redux';
 
 import './CreateEntry.css';
+import { saveReportAction } from '../actions/reportActions';
 
 
 class CreateEntry extends Component {
@@ -17,7 +19,7 @@ class CreateEntry extends Component {
         date: moment().hours(7).minute(30),
         start: moment().hours(7).minute(30),
         end: moment().hours(10).minute(30),
-        break: moment().hours(0).minute(30),
+        breakTime: moment().hours(0).minute(30),
         editTimes: true,
         hours: 2.5,
         customer: '',
@@ -80,7 +82,7 @@ class CreateEntry extends Component {
                                 showSecond={false}
                                 // onChange={this.onChangeHoursCalc}
                                 onChange={this.onChangeBreak}
-                                value={this.state.break}
+                                value={this.state.breakTime}
                                 disabled={!this.state.editTimes}
                                 name="hours"
                             />
@@ -90,7 +92,7 @@ class CreateEntry extends Component {
                                 type="checkbox"
                                 onChange={(e) => {
                                     if (!this.state.editTimes) {
-                                        const mins = (this.state.end - this.state.start) / 60 / 1000 - (this.state.break.hours() * 60 + this.state.break.minute());
+                                        const mins = (this.state.end - this.state.start) / 60 / 1000 - (this.state.breakTime.hours() * 60 + this.state.breakTime.minute());
                                         this.setState((prevState) => ({
                                             hours: mins / 60
                                         }))
@@ -162,14 +164,14 @@ class CreateEntry extends Component {
             hours: mins / 60,
             end: prevState.end,
             errors: error,
-            break: e
+            breakTime: e
         }));
 
     }
 
     onChangeStart = e => {
         let error = {};
-        const mins = (this.state.end - e) / 60 / 1000 - (this.state.break.hours() * 60 + this.state.break.minute());
+        const mins = (this.state.end - e) / 60 / 1000 - (this.state.breakTime.hours() * 60 + this.state.breakTime.minute());
         if (mins <= 0) {
             error.hours = "Negativa timmar";
         }
@@ -178,14 +180,14 @@ class CreateEntry extends Component {
             hours: mins / 60,
             errors: error,
             end: prevState.end,
-            break: prevState.break
+            breakTime: prevState.breakTime
         }));
     }
 
     onChangeEnd = time => {
         let error = {};
 
-        const mins = (time - this.state.start) / 60 / 1000 - (this.state.break.hours() * 60 + this.state.break.minute());
+        const mins = (time - this.state.start) / 60 / 1000 - (this.state.breakTime.hours() * 60 + this.state.breakTime.minute());
         if (mins <= 0) {
             error.hours = "Negativa timmar";
         }
@@ -194,7 +196,7 @@ class CreateEntry extends Component {
             hours: mins / 60,
             errors: error,
             end: time,
-            break: prevState.break
+            breakTime: prevState.breakTime
         }));
     }
 
@@ -202,15 +204,17 @@ class CreateEntry extends Component {
         // Validation is taken care of by disabling the submit button
         e.preventDefault();
         const newEntry = {
+            userId: this.props.user.user.id,
             date: Number(this.state.date),
             hours: this.state.hours,
             customer: this.state.customer,
             comments: this.state.comments,
             start: this.state.editTimes ? Number(this.state.start) : null,
             end: this.state.editTimes ? Number(this.state.end) : null,
-            break: this.state.editTimes ? Number(this.state.break) : null
+            breakTime: this.state.editTimes ? Number(this.state.breakTime) : null
         };
-        console.log(newEntry);
+
+        this.props.saveReportAction(newEntry,this.props.history);
     }
 
     onChangeDate = date => {
@@ -220,4 +224,9 @@ class CreateEntry extends Component {
         }));
     }
 }
-export default CreateEntry;
+
+const mapStateToProps = state => ({
+    user: state.user
+});
+
+export default connect(mapStateToProps, { saveReportAction }, )(CreateEntry);

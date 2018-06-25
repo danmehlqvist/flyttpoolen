@@ -72,6 +72,13 @@ class Register extends Component {
                             }));
                         }}
                     />
+
+                    <BigButton
+                        buttonText="Avbryt"
+                        onClick={() => {
+                            this.props.history.push('/');
+                        }}
+                    />
                     <input style={{ display: "none" }} type="submit" />
                 </form>
             </div>

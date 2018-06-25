@@ -15,6 +15,8 @@ import Login from './Login';
 import CreateEntry from './CreateEntry';
 import PrivateRoute from './common/PrivateRoute';
 import UserStatusBar from './Navigation/UserStatusBar';
+import Dashboard from './Dashboard';
+import JobReported from './JobReported';
 
 // Check for token
 if (localStorage.token) {
@@ -50,7 +52,13 @@ class Flyttpoolen extends React.Component {
                             <Switch>
                                 <PrivateRoute exact path="/create-entry" component={CreateEntry} />
                             </Switch>
-                    
+                            <Switch>
+                                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                            </Switch>
+                            <Switch>
+                                <PrivateRoute exact path="/job-reported" component={JobReported} />
+                            </Switch>
+
                         </div>
                     </BrowserRouter>
 

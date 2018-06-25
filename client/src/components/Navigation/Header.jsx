@@ -9,7 +9,7 @@ import './Header.css';
 export default () => {
     return (
         <div className="Header">
-            <Link to="/">
+            <Link to="/dashboard">
                 <img src={flyttpoolenLogo} alt="Flyttpoolen logo!" />
             </Link>
         </div>
