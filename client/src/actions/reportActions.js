@@ -2,10 +2,32 @@
 
 import axios from 'axios';
 import {
-    SAVE_REPORT
+    SAVE_REPORT,
+    SAVE_MANY_REPORTS
 } from '../reducers/types';
 
-export const saveReportAction = (report,history) => dispatch => {
+export const getReportsWithinGivenDatesAction = (startDate, endDate) => dispatch => {
+    axios.get(`/api/reports?startDate=${startDate}&endDate=${endDate}`)
+        .then(reports => {
+            dispatch({
+                type: SAVE_MANY_REPORTS,
+                payload: reports.data
+            })
+        }).catch(error => {
+            console.log(error);
+        })
+}
+
+export const deleteReportAction = (reportId) => {
+    axios.delete('/api/reports/' + reportId)
+        .then((report) => {
+            console.log('Deleted!');
+        }).catch(errors => {
+            console.log(errors);
+        })
+}
+
+export const saveReportAction = (report, history) => dispatch => {
     const {
         userId,
         date,
@@ -42,6 +64,14 @@ export const saveReportAction = (report,history) => dispatch => {
         }).catch(error => {
             console.error(error);
         })
+}
+
+export const loadReportToStateAction = (report) => dispatch => {
+    dispatch({
+        type: SAVE_REPORT,
+        payload: { ...report
+        }
+    })
 }
 
 export const clearReportAction = () => {

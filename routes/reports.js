@@ -6,7 +6,7 @@ const passport = require('passport');
 const jwt_decode = require('jwt-decode');
 const moment = require('moment');
 
-const Entry = require('../models/Report');
+const Report = require('../models/Report');
 const keys = require('../config/keys');
 
 const validateEntryInput = require('../validation/report');
@@ -14,6 +14,23 @@ const validateEntryInput = require('../validation/report');
 const private = passport.authenticate('jwt', {
     session: false
 });
+
+// @route DELETE api/reports/:id
+// @desc For deleting a route
+// @access Private
+router.delete('/:id', private, (req, res) => {
+    const token = req.get('Authorization').slice(7);
+    const userId = jwt_decode(token).id;
+    Report.deleteOne({
+        _id: req.params.id,
+        userId
+    }).then((report) => {
+        res.json(report);
+    }).catch(errors => {
+        res.send(400).json(errors);
+    })
+});
+
 
 // @route POST api/reports
 // @desc For adding a new entry
@@ -28,7 +45,7 @@ router.post('/', private, (req, res) => {
         return res.status(400).json(errors);
     }
 
-    const newEntry = new Entry({
+    const newEntry = new Report({
         userId: req.body.userId,
         date: req.body.date,
         hours: req.body.hours,
@@ -42,10 +59,6 @@ router.post('/', private, (req, res) => {
     newEntry.save()
         .then(entry => res.json(entry))
         .catch(error => res.status(500).json(error));
-
-
-
-
 })
 
 // @route   GET api/reports/:id
@@ -88,14 +101,12 @@ router.get('/', private, (req, res) => {
         })
     }
     Report.find({
-            user: userId,
-            startDate: {
-                $gte: startDate
-
-            },
-            endDate: {
+            userId: userId,
+            date: {
+                $gte: startDate,
                 $lte: endDate
             }
+
         }).then(reports => {
             if (!reports) {
                 return res.status(404).json({
@@ -111,13 +122,5 @@ router.get('/', private, (req, res) => {
         });
 
 })
-
-// @route   GET api/reports/test
-// @desc    Just a testing route
-// @access  Public
-router.get('/test', (req, res) => {
-    res.send("hello").status(200);
-})
-
 
 module.exports = router;

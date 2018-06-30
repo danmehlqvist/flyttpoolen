@@ -17,28 +17,29 @@ import PrivateRoute from './common/PrivateRoute';
 import UserStatusBar from './Navigation/UserStatusBar';
 import Dashboard from './Dashboard';
 import JobReported from './JobReported';
+import DisplaySingleReport from './DisplaySingleReport';
 
-// Check for token
-if (localStorage.token) {
-    //Set auth header token for axios requests
-    setAuthToken(localStorage.token);
-    const decoded = jwt_decode(localStorage.token);
-    // Set user
-    store.dispatch(setCurrentUserAction(decoded));
-    // Check for expired token
-    const currentTime = Date.now() / 1000;
-    if (decoded.exp < currentTime) {
-        // Logout user
-        store.dispatch(logoutUserAction());
-        window.location.href = "/login";
-    }
-
-
-}
 
 class Flyttpoolen extends React.Component {
 
     render() {
+
+        // Check for token
+        if (localStorage.token) {
+            //Set auth header token for axios requests
+            setAuthToken(localStorage.token);
+            const decoded = jwt_decode(localStorage.token);
+            // Set user
+            store.dispatch(setCurrentUserAction(decoded));
+            // Check for expired token
+            const currentTime = Date.now() / 1000;
+            if (decoded.exp < currentTime) {
+                // Logout user
+                store.dispatch(logoutUserAction());
+                window.location.href = "/login";
+            }
+        }
+
         return (
             <Provider store={store}>
                 <div className="Flyttpoolen">
@@ -57,6 +58,9 @@ class Flyttpoolen extends React.Component {
                             </Switch>
                             <Switch>
                                 <PrivateRoute exact path="/job-reported" component={JobReported} />
+                            </Switch>
+                            <Switch>
+                                <PrivateRoute exact path="/display-single-report" component={DisplaySingleReport} />
                             </Switch>
 
                         </div>

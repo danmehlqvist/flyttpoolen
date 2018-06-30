@@ -1,6 +1,7 @@
 import {
     SAVE_REPORT,
-    CLEAR_REPORT
+    CLEAR_REPORT,
+    SAVE_MANY_REPORTS,
 } from './types';
 
 const initialState = {
@@ -10,6 +11,10 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case SAVE_MANY_REPORTS:
+            return {
+                reports: action.payload
+            }
 
         case SAVE_REPORT:
             return {

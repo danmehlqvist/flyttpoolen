@@ -30,7 +30,7 @@ class CreateEntry extends Component {
     render() {
 
 
-
+        console.log(this.props);
         return (
             <div className="CreateEntry">
                 <h1>Rapportera jobb</h1>
@@ -229,4 +229,4 @@ const mapStateToProps = state => ({
     user: state.user
 });
 
-export default connect(mapStateToProps, { saveReportAction }, )(CreateEntry);
+export default connect(mapStateToProps, { saveReportAction } )(CreateEntry);

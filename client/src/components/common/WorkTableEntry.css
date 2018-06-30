@@ -1,0 +1,9 @@
+tr.WorkTableEntry .icon {
+    color: black;
+    transition: color 0.3s;
+}
+
+tr.WorkTableEntry .icon:hover,
+tr.WorkTableEntry .icon:active {
+    color: orange;
+}
