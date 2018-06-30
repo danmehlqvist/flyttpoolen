@@ -28,9 +28,6 @@ class CreateEntry extends Component {
     }
 
     render() {
-
-
-        console.log(this.props);
         return (
             <div className="CreateEntry">
                 <h1>Rapportera jobb</h1>

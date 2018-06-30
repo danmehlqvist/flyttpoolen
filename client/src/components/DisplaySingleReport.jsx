@@ -34,7 +34,7 @@ class DisplaySingleReport extends Component {
   }
 
   deleteButtonClick = e => {
-    deleteReportAction(this.props.report._id);
+    this.props.deleteReportAction(this.props.report._id);
     this.props.history.push('/dashboard');
   }
 }
@@ -50,4 +50,4 @@ const mapStateToProps = state => ({
   report: state.reports.report
 });
 
-export default connect(mapStateToProps)(DisplaySingleReport);
+export default connect(mapStateToProps, { deleteReportAction })(DisplaySingleReport);

@@ -3,7 +3,8 @@
 import axios from 'axios';
 import {
     SAVE_REPORT,
-    SAVE_MANY_REPORTS
+    SAVE_MANY_REPORTS,
+    DELETE_REPORT
 } from '../reducers/types';
 
 export const getReportsWithinGivenDatesAction = (startDate, endDate) => dispatch => {
@@ -18,10 +19,14 @@ export const getReportsWithinGivenDatesAction = (startDate, endDate) => dispatch
         })
 }
 
-export const deleteReportAction = (reportId) => {
+export const deleteReportAction = (reportId) => dispatch =>  {
     axios.delete('/api/reports/' + reportId)
         .then((report) => {
             console.log('Deleted!');
+            dispatch({
+                type: DELETE_REPORT,
+                payload: reportId
+            })
         }).catch(errors => {
             console.log(errors);
         })

@@ -4,3 +4,4 @@ export const SET_USER = 'SET_USER';
 export const SAVE_REPORT = 'SAVE_REPORT';
 export const CLEAR_REPORT = 'CLEAR_REPORT';
 export const SAVE_MANY_REPORTS = 'SAVE_MANY_REPORTS';
+export const DELETE_REPORT = 'DELETE_REPORT';
