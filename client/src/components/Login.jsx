@@ -37,16 +37,16 @@ class Login extends Component {
                         onChange={this.onChange}
                         error={this.state.errors.password}
                     />
-                    <BigButton
-                        buttonText="Logga in"
+                    <button
+                        className="big"
                         onClick={this.onSubmit}
-                    />
-                    <BigButton
-                        buttonText="Avbryt"
-                        onClick={()=>{
+                    >Logga In</button>
+                    <button
+                        className="big"
+                        onClick={() => {
                             this.props.history.push('/');
                         }}
-                    />
+                    >Avbryt</button>
                     <input type="submit" style={{ display: "none" }} />
                 </form>
             </div>

@@ -8,3 +8,22 @@ body {
 h1 {
   font-size: 140%;
 }
+
+button.big {
+  background:orange;
+  border:2px solid #333;
+  font-size:25px;
+  display:block;
+  margin:20px auto;
+  padding:10px;
+  border-radius:5px;
+  font-weight:bold;
+  transition: border 0.3s, background 0.3s;
+}
+
+button.big:hover,
+button.big:active {
+    background: darkorange;
+    border:2px solid black;
+    
+}

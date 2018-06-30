@@ -16,10 +16,13 @@ class Dashboard extends Component {
     }
 
     render() {
+        const totalHoursWorked = this.props.reports.reduce((acc, report) => acc + report.hours, 0);
         return (
             <div className="Dashboard">
                 <h1>Löneperiod:</h1>
                 <h1> {this._getNameOfMonth(this.state.startMonth)} - {this._getNameOfMonth(this.state.startMonth + 1)}</h1>
+                <p>Totalt antal timmar: {totalHoursWorked}</p>
+                <p>Antal arbetsdagar: </p>
                 <Link to="/create-entry">Rapportera arbete</Link>
                 <WorkTable
                     data={this.props.reports}
@@ -48,40 +51,40 @@ class Dashboard extends Component {
     }
 
     componentWillMount = () => {
+
+        // Calculate startDate and endDate
+        const today = moment();
+        const dateNumber = today.date();
+        const monthNumber = today.month();
+        const yearNumber = today.year();
+
+        // Creates a string from a number. If only one digit, then it adds a 0 to start with
+        const addZero = number => number <= 9 ? "0" + number : String(number);
+
+        const thisMonthString = addZero(monthNumber + 1);
+
+        const previousMonthString = addZero(monthNumber);
+        const nextMonthString = monthNumber === 11 ? "01" : addZero((monthNumber + 2));
+
+        const thisYearString = String(yearNumber);
+        const previousYearString = monthNumber === 0 ? String((yearNumber - 1)) : String(yearNumber);
+        const nextYearString = monthNumber === 11 ? String((yearNumber + 1)) : String(yearNumber);
+
+        let startDate;
+        let endDate;
+
+        if (dateNumber > 15) {
+            startDate = `${thisYearString}${thisMonthString}16`;
+            endDate = `${nextYearString}${nextMonthString}15`;
+        } else {
+            startDate = `${previousYearString}${previousMonthString}16`;
+            endDate = `${thisYearString}${thisMonthString}15`;
+        }
+        this.setState(() => ({
+            startMonth: dateNumber > 15 ? monthNumber : monthNumber - 1
+        }));
+
         if (Object.keys(this.props.reports).length === 0) {
-            // Calculate startDate and endDate
-            const today = moment();
-            const dateNumber = today.date();
-            // const monthNumber = 8;
-            const monthNumber = today.month();
-            const yearNumber = today.year();
-
-            // Creates a string from a number. If only one digit, then it adds a 0 to start with
-            const addZero = number => number <= 9 ? "0" + number : String(number);
-
-            const thisMonthString = addZero(monthNumber + 1);
-            // const thisMonthString = monthNumber <= 9 ? "0" + ((monthNumber + 1)) : addZero(monthNumber);
-            const previousMonthString = addZero(monthNumber);
-            // const previousMonthString = monthNumber <= 9 ? "0" + monthNumber : addZero(monthNumber);
-            const nextMonthString = monthNumber === 11 ? "01" : addZero((monthNumber + 2));
-
-            const thisYearString = String(yearNumber);
-            const previousYearString = monthNumber === 0 ? String((yearNumber - 1)) : String(yearNumber);
-            const nextYearString = monthNumber === 11 ? String((yearNumber + 1)) : String(yearNumber);
-
-            let startDate;
-            let endDate;
-
-            if (dateNumber > 15) {
-                startDate = `${thisYearString}${thisMonthString}16`;
-                endDate = `${nextYearString}${nextMonthString}15`;
-            } else {
-                startDate = `${previousYearString}${previousMonthString}16`;
-                endDate = `${thisYearString}${thisMonthString}15`;
-            }
-            this.setState(() => ({
-                startMonth: dateNumber > 15 ? monthNumber : monthNumber - 1
-            }));
             this.props.getReportsWithinGivenDatesAction(startDate, endDate);
         }
     }

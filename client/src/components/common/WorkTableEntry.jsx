@@ -44,8 +44,5 @@ class WorkTableEntry extends React.Component {
 
 }
 
-// const mapStateToProps = state => ({
-//     user: state.user
-// });
 
 export default connect(null , { loadReportToStateAction })(withRouter(WorkTableEntry));

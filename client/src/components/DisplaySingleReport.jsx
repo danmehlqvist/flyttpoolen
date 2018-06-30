@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 import './DisplaySingleReport.css';
 import { deleteReportAction } from '../actions/reportActions';
@@ -22,8 +23,10 @@ class DisplaySingleReport extends Component {
         <div>Totalt: {String(this.props.report.hours).replace('.', ',')} timmar</div>
         <div>{this.props.report.customer}</div>
         <div>{this.props.report.comments}</div>
-        <button onClick={this.deleteButtonClick}>Delete</button>
-        <button>Edit</button>
+        <button onClick={this.deleteButtonClick}>Radera</button>
+        <button>Ändra</button>
+        <button onClick={() => this.props.history.push('/dashboard')}>Tillbaka</button>
+
       </div>
     )
   }
