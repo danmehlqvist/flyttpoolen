@@ -88,6 +88,7 @@ router.get('/:id', private, (req, res) => {
 // @query   STARTDATE and ENDDATE should be of the format YYYYMMDD
 // @access  Private
 router.get('/', private, (req, res) => {
+    req;
     const token = req.get('Authorization').slice(7);
     const userId = jwt_decode(token).id;
 

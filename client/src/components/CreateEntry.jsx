@@ -61,8 +61,8 @@ class CreateEntry extends Component {
                         <div>
                             <p>Slut-tid</p>
                             <TimePicker
-                                
-                                onfocus="blur();"
+                                readOnly
+                                // onfocus="blur();"
                                 allowEmpty={false}
                                 className="TimePicker"
                                 minuteStep={30}
@@ -79,7 +79,7 @@ class CreateEntry extends Component {
                             <p>Rast</p>
                             <TimePicker
                                 
-                                onFocus="blur();"
+                                // onFocus="blur();"
                                 allowEmpty={false}
                                 className="TimePicker"
                                 minuteStep={30}
