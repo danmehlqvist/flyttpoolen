@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import { connect } from 'react-redux';
+import hideVirtualKeyboard from 'hide-virtual-keyboard';
 
 import './CreateEntry.css';
 import { saveReportAction } from '../actions/reportActions';
@@ -45,7 +46,8 @@ class CreateEntry extends Component {
                             <p>Start-tid</p>
                             <TimePicker
                                 readonly
-                                
+                                onClick={hideVirtualKeyboard()}
+
                                 allowEmpty={false}
                                 className="TimePicker"
                                 minuteStep={30}
@@ -78,7 +80,7 @@ class CreateEntry extends Component {
                         <div>
                             <p>Rast</p>
                             <TimePicker
-                                
+
                                 // onFocus="blur();"
                                 allowEmpty={false}
                                 className="TimePicker"
@@ -145,92 +147,92 @@ class CreateEntry extends Component {
                 </form>
                 <button onClick={() => this.props.history.push('/dashboard')}>Tillbaka</button>
             </div>
-            )
-        }
-    
+        )
+    }
+
     onChangeCustomerOrComments = e => {
         const name = e.target.name;
-                const value = e.target.value;
+        const value = e.target.value;
         this.setState(() => ({
-                    [name]: value.trim()
-            }))
-        }
-    
-    
+            [name]: value.trim()
+        }))
+    }
+
+
     onChangeBreak = e => {
         const mins = (this.state.end - this.state.start) / 60 / 1000 - (e.hours() * 60 + e.minute());
         let error = {};
         if (mins <= 0) {
-                    error.hours = "Mer rast än arbete? Bra där!";
-                }
-        this.setState((prevState) => ({
-                    start: prevState.start,
-                hours: mins / 60,
-                end: prevState.end,
-                errors: error,
-                breakTime: e
-            }));
-    
+            error.hours = "Mer rast än arbete? Bra där!";
         }
-    
+        this.setState((prevState) => ({
+            start: prevState.start,
+            hours: mins / 60,
+            end: prevState.end,
+            errors: error,
+            breakTime: e
+        }));
+
+    }
+
     onChangeStart = e => {
-                    let error = {};
-                const mins = (this.state.end - e) / 60 / 1000 - (this.state.breakTime.hours() * 60 + this.state.breakTime.minute());
+        let error = {};
+        const mins = (this.state.end - e) / 60 / 1000 - (this.state.breakTime.hours() * 60 + this.state.breakTime.minute());
         if (mins <= 0) {
-                    error.hours = "Negativa timmar";
-                }
-        this.setState((prevState) => ({
-                    start: e,
-                hours: mins / 60,
-                errors: error,
-                end: prevState.end,
-                breakTime: prevState.breakTime
-            }));
+            error.hours = "Negativa timmar";
         }
-    
+        this.setState((prevState) => ({
+            start: e,
+            hours: mins / 60,
+            errors: error,
+            end: prevState.end,
+            breakTime: prevState.breakTime
+        }));
+    }
+
     onChangeEnd = time => {
-                    let error = {};
-        
-                const mins = (time - this.state.start) / 60 / 1000 - (this.state.breakTime.hours() * 60 + this.state.breakTime.minute());
+        let error = {};
+
+        const mins = (time - this.state.start) / 60 / 1000 - (this.state.breakTime.hours() * 60 + this.state.breakTime.minute());
         if (mins <= 0) {
-                    error.hours = "Negativa timmar";
-                }
+            error.hours = "Negativa timmar";
+        }
         this.setState((prevState) => ({
-                    start: prevState.start,
-                hours: mins / 60,
-                errors: error,
-                end: time,
-                breakTime: prevState.breakTime
-            }));
-        }
-    
+            start: prevState.start,
+            hours: mins / 60,
+            errors: error,
+            end: time,
+            breakTime: prevState.breakTime
+        }));
+    }
+
     onSubmit = e => {
-                    // Validation is taken care of by disabling the submit button
-                    e.preventDefault();
-                const newEntry = {
-                    userId: this.props.user.user.id,
-                date: Number(this.state.date),
-                hours: this.state.hours,
-                customer: this.state.customer,
-                comments: this.state.comments,
-                start: this.state.editTimes ? Number(this.state.start) : null,
-                end: this.state.editTimes ? Number(this.state.end) : null,
-                breakTime: this.state.editTimes ? Number(this.state.breakTime) : null
-            };
-    
-            this.props.saveReportAction(newEntry, this.props.history);
-        }
-    
+        // Validation is taken care of by disabling the submit button
+        e.preventDefault();
+        const newEntry = {
+            userId: this.props.user.user.id,
+            date: Number(this.state.date),
+            hours: this.state.hours,
+            customer: this.state.customer,
+            comments: this.state.comments,
+            start: this.state.editTimes ? Number(this.state.start) : null,
+            end: this.state.editTimes ? Number(this.state.end) : null,
+            breakTime: this.state.editTimes ? Number(this.state.breakTime) : null
+        };
+
+        this.props.saveReportAction(newEntry, this.props.history);
+    }
+
     onChangeDate = date => {
-                    console.log(date);
-                this.setState(() => ({
-                    date
-                }));
-            }
-        }
-        
+        console.log(date);
+        this.setState(() => ({
+            date
+        }));
+    }
+}
+
 const mapStateToProps = state => ({
-                    user: state.user
-            });
-            
-export default connect(mapStateToProps, {saveReportAction})(CreateEntry);
+    user: state.user
+});
+
+export default connect(mapStateToProps, { saveReportAction })(CreateEntry);
