@@ -27,6 +27,7 @@ input[type="submit"] {
   display: block;
   border-radius: 5px;
   font-weight: bold;
+  margin: 20px auto;
 }
 
 .small {
