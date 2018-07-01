@@ -2,6 +2,13 @@
     text-align: center;
 }
 
+.DatePicker {
+    width:110px;
+    font-size:20px;
+    text-align:center;
+}
+
+
 /* Grid for Time */
 
 .CreateEntry .time {
@@ -42,4 +49,8 @@ div.rc-time-picker-panel-combobox>div {
 /* Hours */
 .CreateEntry input[type="number"]{
     width:50px;
+}
+
+input[disabled]{
+    cursor: not-allowed;
 }

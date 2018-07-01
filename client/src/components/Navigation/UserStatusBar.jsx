@@ -16,7 +16,7 @@ class UserStatusBar extends Component {
                         Inloggad som {this.props.user.user.name}
                     </div>
                     <div className="logout">
-                        <button onClick={this.onClick}>Logout</button>
+                        <button className="small" onClick={this.onClick}>Logga ut</button>
                     </div>
                 </div>
             )

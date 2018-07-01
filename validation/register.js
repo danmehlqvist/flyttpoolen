@@ -18,7 +18,7 @@ module.exports = function validateRegisterInput(data) {
             min: 3,
             max: 30
         })) {
-        errors.name = 'Name must be between four and 30 characters';
+        errors.name = 'Name must be between three and 30 characters';
     };
 
    

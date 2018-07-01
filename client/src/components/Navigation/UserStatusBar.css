@@ -7,15 +7,16 @@
     align-items: center;
     border-bottom: 3px solid black;
     position: relative;
+    margin-top: 3px;
 }
 
 .UserStatusBar .grid .name {
-    position: relative;
+  
     text-align: center;
-    top:-3px;
+    
 }
 
 .UserStatusBar .grid .logout {
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom:3px;
 }

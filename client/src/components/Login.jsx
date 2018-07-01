@@ -6,7 +6,6 @@ import './Login.css';
 import { loginUserAction } from '../actions/userActions';
 
 import TextFieldInput from './common/TextFieldInput';
-import BigButton from './common/BigButton';
 
 class Login extends Component {
 
@@ -57,11 +56,11 @@ class Login extends Component {
         e.preventDefault();
         const errors = {};
         //Some basic validation before sending to server
-        if (this.state.name.length < 4) {
-            errors.name = 'Minimum fyra tecken'
+        if (this.state.name.length < 3) {
+            errors.name = 'Minst tre tecken'
         }
         if (this.state.password.length < 4) {
-            errors.password = 'Minimum fyra tecken'
+            errors.password = 'Minst fyra tecken'
         }
         this.setState(() => ({ errors }))
 

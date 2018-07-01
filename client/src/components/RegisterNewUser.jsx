@@ -97,11 +97,11 @@ class Register extends Component {
 
         const errors = {};
         // Validation for name
-        if (this.state.name.length === 0) {
+        if (this.state.name.trim().length === 0) {
             errors.name = "Skriv in namnet, din idiot!"
-        } else if (this.state.name.length < 4) {
-            errors.name = "Minst 4 bokstäver för i helvete"
-        } else if (this.state.name.length > 20) {
+        } else if (this.state.name.length < 3) {
+            errors.name = "Minst 3 bokstäver för i helvete"
+        } else if (this.state.name.length > 30) {
             errors.name = "Välj ett kortare namn"
         }
         // Validation for password

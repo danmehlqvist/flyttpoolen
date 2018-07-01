@@ -16,14 +16,25 @@ class Dashboard extends Component {
     }
 
     render() {
-        const totalHoursWorked = this.props.reports.reduce((acc, report) => acc + report.hours, 0);
+
+        let totalHoursWorked;
+        let workingDays;
+        if (this.props.reports) {
+            totalHoursWorked = this.props.reports.reduce((acc, report) => acc + report.hours, 0);
+
+            workingDays = new Set(
+                this.props.reports.map(report => {
+                    return moment(report.date).date();
+                })
+            ).size;
+        }
+
         return (
             <div className="Dashboard">
-                <h1>Löneperiod:</h1>
-                <h1> {this._getNameOfMonth(this.state.startMonth)} - {this._getNameOfMonth(this.state.startMonth + 1)}</h1>
-                <p>Totalt antal timmar: {totalHoursWorked}</p>
-                <p>Antal arbetsdagar: </p>
-                <Link to="/create-entry">Rapportera arbete</Link>
+                <h1>Löneperiod {this._getNameOfMonth(this.state.startMonth)} - {this._getNameOfMonth(this.state.startMonth + 1)}</h1>
+                <p>Arbetade timmar: {totalHoursWorked}</p>
+                <p style={{marginBottom:"40px"}}>Arbetade dagar: {workingDays}</p>
+                <Link className="Link" to="/create-entry">Rapportera arbete</Link>
                 <WorkTable
                     data={this.props.reports}
                 />

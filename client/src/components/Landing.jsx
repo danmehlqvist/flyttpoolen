@@ -1,11 +1,6 @@
-import {connect} from 'react-redux';
-
-// This file will present the user to a login/register screen if no token is available
-
+import { connect } from 'react-redux';
 
 import React from 'react'
-
-import BigButton from './common/BigButton';
 
 import './Landing.css';
 
@@ -13,23 +8,23 @@ class Landing extends React.Component {
   render() {
     return (
       <div className="Landing">
-        <BigButton
-          buttonText="Logga in!"
+        <button
+          className="big"
           onClick={
             () => {
               this.props.history.push('/login');
             }
           }
-        />
+        >Logga In!</button>
 
-        <BigButton
-          buttonText="Ny användare!"
+        <button
+        className="big"
           onClick={
             () => {
               this.props.history.push('/register');
             }
           }
-        />
+        >Ny användare!</button>
       </div >
     )
   }
@@ -39,9 +34,8 @@ class Landing extends React.Component {
   }
 
   componentWillMount() {
-    console.log('Landing component is mounted');
-    if (this.props.user.isAuthenticated){
-      this.props.history.push('/create-entry');
+    if (this.props.user.isAuthenticated) {
+      this.props.history.push('/dashboard');
     }
   }
 
