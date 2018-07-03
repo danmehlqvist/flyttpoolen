@@ -9,15 +9,15 @@ import setAuthToken from '../utils/setAuthToken';
 import { setCurrentUserAction, logoutUserAction } from '../actions/userActions';
 
 import Header from './Navigation/Header';
-import Landing from './Landing';
-import RegisterNewUser from './RegisterNewUser';
-import Login from './Login';
-import CreateEntry from './CreateEntry';
+import Landing from './pages/Landing/Landing';
+import RegisterNewUser from './pages/RegisterNewUser/RegisterNewUser';
+import Login from './pages/Login/Login';
+import CreateEntry from './pages/CreateEntry/CreateEntry';
 import PrivateRoute from './common/PrivateRoute';
 import UserStatusBar from './Navigation/UserStatusBar';
-import Dashboard from './Dashboard';
+import Dashboard from './pages/Dashboard/Dashboard';
 import JobReported from './JobReported';
-import DisplaySingleReport from './DisplaySingleReport';
+import DisplaySingleReport from './pages/Dashboard/DisplaySingleReport/DisplaySingleReport';
 
 
 class Flyttpoolen extends React.Component {

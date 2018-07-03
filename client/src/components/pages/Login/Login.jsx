@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropType from 'prop-types';
 
 import './Login.css';
-import { loginUserAction } from '../actions/userActions';
+import { loginUserAction } from '../../../actions/userActions';
 
-import TextFieldInput from './common/TextFieldInput';
+import TextFieldInput from '../../common/TextFieldInput';
 
 class Login extends Component {
 

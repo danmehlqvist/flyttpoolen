@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 import './RegisterNewUser.css';
-import { registerUserAction } from '../actions/userActions';
+import { registerUserAction } from '../../../actions/userActions';
 
-import TextFieldInput from './common/TextFieldInput';
-import BigButton from './common/BigButton';
+import TextFieldInput from '../../common/TextFieldInput';
 
 class Register extends Component {
 
@@ -54,15 +54,14 @@ class Register extends Component {
                     />
 
 
-                    <BigButton
-                        buttonText="Registrera"
-                        onClick={this.onSubmit}
-                    />
+
+                    <button onClick={this.onSubmit}>
+                        Skicka</button>
 
 
 
-                    <BigButton
-                        buttonText="Rensa"
+
+                    <button
                         onClick={() => {
                             this.setState(() => ({
                                 name: '',
@@ -71,14 +70,10 @@ class Register extends Component {
                                 errors: {}
                             }));
                         }}
-                    />
+                    >Rensa</button>
 
-                    <BigButton
-                        buttonText="Avbryt"
-                        onClick={() => {
-                            this.props.history.push('/');
-                        }}
-                    />
+                    <Link to="/" className="button">Tillbaka</Link>
+
                     <input style={{ display: "none" }} type="submit" />
                 </form>
             </div>

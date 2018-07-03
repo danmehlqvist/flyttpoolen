@@ -5,9 +5,9 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import './Dashboard.css';
-import { getReportsWithinGivenDatesAction } from '../actions/reportActions';
+import { getReportsWithinGivenDatesAction } from '../../../actions/reportActions';
 
-import WorkTable from './common/WorkTable';
+import WorkTable from './WorkTable/WorkTable';
 
 class Dashboard extends Component {
 

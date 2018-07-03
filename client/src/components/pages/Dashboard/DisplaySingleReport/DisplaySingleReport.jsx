@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import './DisplaySingleReport.css';
-import { deleteReportAction } from '../actions/reportActions';
+import { deleteReportAction } from '../../../../actions/reportActions';
 
 class DisplaySingleReport extends Component {
   render() {

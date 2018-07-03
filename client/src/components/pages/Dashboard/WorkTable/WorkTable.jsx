@@ -2,7 +2,7 @@ import React from 'react'
 
 import './WorkTable.css';
 
-import WorkTableEntry from './WorkTableEntry';
+import WorkTableEntry from './WorkTableEntry/WorkTableEntry';
 export default (props) => {
 
     const compare = (a, b) => {

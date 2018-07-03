@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import './WorkTableEntry.css';
-import { loadReportToStateAction } from '../../actions/reportActions';
+import { loadReportToStateAction } from '../../../../../actions/reportActions';
 
 
 library.add(faInfoCircle);

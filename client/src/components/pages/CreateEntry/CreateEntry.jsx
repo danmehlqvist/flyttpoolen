@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 
 
 import './CreateEntry.css';
-import { saveReportAction } from '../actions/reportActions';
+import { saveReportAction } from '../../../actions/reportActions';
 
 
 class CreateEntry extends Component {
@@ -33,7 +33,7 @@ class CreateEntry extends Component {
             <div className="CreateEntry">
                 <h1>Rapportera jobb</h1>
                 <form onSubmit={this.onSubmit} autoComplete="flyttpoolen">
-                    <div className="label">Datum</div>
+                    <p>Datum</p>
                     <DatePicker
                         className="DatePicker"
                         selected={this.state.date}
@@ -45,18 +45,12 @@ class CreateEntry extends Component {
                         <div>
                             <p>Start-tid</p>
                             <TimePicker
-                                // className="adjust-timepicker"
                                 inputReadOnly
-                                // onClick={hideVirtualKeyboard()}
-                                onFocus={e => {
-                                    e.target.blur();
-                                }}
                                 allowEmpty={false}
-                                // className="TimePicker"
+                                className="TimePicker"
                                 minuteStep={30}
                                 showSecond={false}
                                 onChange={this.onChangeStart}
-                                // onChange={this.onChangeHoursCalc}
                                 value={this.state.start}
                                 disabled={!this.state.editTimes}
                                 name="start"
@@ -67,13 +61,11 @@ class CreateEntry extends Component {
                             <p>Slut-tid</p>
                             <TimePicker
                                 inputReadOnly
-                                // onfocus="blur();"
                                 allowEmpty={false}
                                 className="TimePicker"
                                 minuteStep={30}
                                 showSecond={false}
                                 onChange={this.onChangeEnd}
-                                // onChange={this.onChangeHoursCalc}
                                 value={this.state.end}
                                 disabled={!this.state.editTimes}
                                 name="end"
@@ -84,12 +76,10 @@ class CreateEntry extends Component {
                             <p>Rast</p>
                             <TimePicker
                                 inputReadOnly
-                                // onFocus="blur();"
                                 allowEmpty={false}
                                 className="TimePicker"
                                 minuteStep={30}
                                 showSecond={false}
-                                // onChange={this.onChangeHoursCalc}
                                 onChange={this.onChangeBreak}
                                 value={this.state.breakTime}
                                 disabled={!this.state.editTimes}
@@ -112,10 +102,10 @@ class CreateEntry extends Component {
                                 }}
                             />
                         </div>
-
                     </div>
+                    {this.state.errors.time && <p className="errors">{this.state.errors.time}</p>}
 
-                    <div className="label">Timmar</div>
+                    <p>Timmar</p>
                     <input
                         min="0.5"
                         value={this.state.hours}
@@ -130,36 +120,32 @@ class CreateEntry extends Component {
                             }));
                         }}
                     />
-                    {this.state.errors.hours && <div className="erorr">{this.state.errors.hours}</div>}
+                    {this.state.errors.hours && <p className="errors">{this.state.errors.hours}</p>}
 
-                    <div className="label">Kund</div>
+                    <p>Kund</p>
                     <input
-                        autoComplete='flyttpoolen'
+                        noValidate
+                        autoComplete='Flyttpoolen'
                         type="text"
                         name="customer"
                         onChange={this.onChangeCustomerOrComments}
                     />
+                    {this.state.errors.customer && <p className="errors">{this.state.errors.customer}</p>}
 
-                    <div className="label">Kommentarer</div>
+
+                    <p>Kommentarer</p>
                     <textarea
                         name="comments"
                         onChange={this.onChangeCustomerOrComments}
                     />
 
-                    <br /><input disabled={!this.state.customer && Object.keys(this.state.errors).length === 0} type="submit" />
+                    <br /> <input type="submit" />
                 </form>
                 <button onClick={() => this.props.history.push('/dashboard')}>Tillbaka</button>
             </div>
         )
     }
 
-    componentDidMount = () => {
-        // document.querySelector('.rc-time-picker-input').setAttribute('readonly','true');
-        // document.querySelector('.rc-time-picker-input').setAttribute('readOnly','true');
-        // console.log(timepicker);
-
-        // console.log(input);
-    }
 
     onChangeCustomerOrComments = e => {
         const name = e.target.name;
@@ -217,21 +203,55 @@ class CreateEntry extends Component {
         }));
     }
 
+    validateData = () => {
+        let errors = {};
+        if (this.state.start > this.state.end) {
+            errors.time = "Starttid kan inte vara innan sluttid"
+        }
+
+        if (this.state.start === this.state.end) {
+            errors.time = "Starttiden kan inte vara samma som sluttiden"
+        }
+
+        if (this.state.end - this.state.start - this.state.break < 0) {
+            errors.time = "Arbetstiden kan inte vara kortare än rasten, din late fan!"
+        }
+
+        if (this.state.hours < 0) {
+            errors.hours = "Arbetstiden kan inte vara negativ";
+        }
+        if (this.state.hours === 0) {
+            errors.hours = "Arbetstiden kan inte vara noll";
+        }
+
+        if (!this.state.customer) {
+            errors.customer = "Kundfältet måste vara ifyllt"
+        }
+
+        return errors;
+
+    }
+
     onSubmit = e => {
         // Validation is taken care of by disabling the submit button
         e.preventDefault();
-        const newEntry = {
-            userId: this.props.user.user.id,
-            date: Number(this.state.date),
-            hours: this.state.hours,
-            customer: this.state.customer,
-            comments: this.state.comments,
-            start: this.state.editTimes ? Number(this.state.start) : null,
-            end: this.state.editTimes ? Number(this.state.end) : null,
-            breakTime: this.state.editTimes ? Number(this.state.breakTime) : null
-        };
+        const errors = this.validateData();
+        if (Object.keys(errors).length === 0) {
+            const newEntry = {
+                userId: this.props.user.user.id,
+                date: Number(this.state.date),
+                hours: this.state.hours,
+                customer: this.state.customer,
+                comments: this.state.comments,
+                start: this.state.editTimes ? Number(this.state.start) : null,
+                end: this.state.editTimes ? Number(this.state.end) : null,
+                breakTime: this.state.editTimes ? Number(this.state.breakTime) : null
+            };
 
-        this.props.saveReportAction(newEntry, this.props.history);
+            this.props.saveReportAction(newEntry, this.props.history);
+        } else {
+            this.setState(() => ({ errors }))
+        }
     }
 
     onChangeDate = date => {

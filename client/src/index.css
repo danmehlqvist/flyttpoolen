@@ -10,7 +10,8 @@ h1 {
 }
 
 button, 
-input[type="submit"] {
+input[type="submit"],
+a.button{
   background: orange;
   border: 1px solid #333;
   font-size: 20px;
@@ -19,6 +20,14 @@ input[type="submit"] {
   border-radius: 3px;
   transition: border 0.3s, background 0.3s;
   margin-left:5px;
+}
+
+a{
+  text-decoration:none; 
+}
+
+a:visited,a:active {
+  color:black;
 }
 
 .big {
@@ -39,7 +48,9 @@ input[type="submit"] {
 button:hover,
 button:active,
 input[type="submit"]:hover,
-input[type="submit"]:active {
+input[type="submit"]:active,
+a.button:hover,
+a.button:active {
   background: darkorange;
   border: 1px solid black;
 }

@@ -1,3 +1,13 @@
+p {
+    margin-top:20px;
+    margin-bottom:2px;
+}
+
+p.errors {
+    color:red;
+    margin-top:2px;
+}
+
 .CreateEntry {
     text-align: center;
 }
@@ -38,7 +48,6 @@ div.rc-time-picker-panel-combobox>div {
 
 .CreateEntry .checkbox {
     align-self: end;
-    margin-bottom: 5px;
 }
 
 .CreateEntry .checkbox input[type='checkbox'] {
