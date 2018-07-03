@@ -10,15 +10,13 @@ class DisplaySingleReport extends Component {
     return (
       <div className="DisplaySingleReport">
         <h1>{moment(this.props.report.date).format('YYYY-MM-DD')}</h1>
-        {this.props.report.start ? (
+        {this.props.report.start && (
           <div>
             {makeNiceLookingTimeDisplay(moment(this.props.report.start).hour(), moment(this.props.report.start).minute())} -
-            {makeNiceLookingTimeDisplay(moment(this.props.report.end).hour(), moment(this.props.report.end).minute())} -
+            {makeNiceLookingTimeDisplay(moment(this.props.report.end).hour(), moment(this.props.report.end).minute())} - 
             {makeNiceLookingTimeDisplay(moment(this.props.report.breakTime).hour(), moment(this.props.report.breakTime).minute())}
           </div>
-        ) : (
-            <div>test</div>
-          )}
+        )}
         <div>Totalt: {String(this.props.report.hours).replace('.', ',')} timmar</div>
         <div>{this.props.report.customer}</div>
         <div>{this.props.report.comments}</div>
@@ -33,6 +31,7 @@ class DisplaySingleReport extends Component {
     if (!this.props.report.customer) {
       this.props.history.push('/dashboard');
     }
+   
   }
 
   deleteButtonClick = e => {

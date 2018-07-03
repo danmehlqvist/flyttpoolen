@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import { connect } from 'react-redux';
-import hideVirtualKeyboard from 'hide-virtual-keyboard';
+
 
 import './CreateEntry.css';
 import { saveReportAction } from '../actions/reportActions';
@@ -45,11 +45,14 @@ class CreateEntry extends Component {
                         <div>
                             <p>Start-tid</p>
                             <TimePicker
+                                // className="adjust-timepicker"
                                 readonly
-                                onClick={hideVirtualKeyboard()}
-
+                                // onClick={hideVirtualKeyboard()}
+                                onFocus={e=>{
+                                    e.target.blur();
+                                }}
                                 allowEmpty={false}
-                                className="TimePicker"
+                                // className="TimePicker"
                                 minuteStep={30}
                                 showSecond={false}
                                 onChange={this.onChangeStart}
@@ -63,7 +66,7 @@ class CreateEntry extends Component {
                         <div>
                             <p>Slut-tid</p>
                             <TimePicker
-                                readOnly
+                                inputReadOnly
                                 // onfocus="blur();"
                                 allowEmpty={false}
                                 className="TimePicker"
@@ -148,6 +151,14 @@ class CreateEntry extends Component {
                 <button onClick={() => this.props.history.push('/dashboard')}>Tillbaka</button>
             </div>
         )
+    }
+
+    componentDidMount = () => {
+        // document.querySelector('.rc-time-picker-input').setAttribute('readonly','true');
+        // document.querySelector('.rc-time-picker-input').setAttribute('readOnly','true');
+        // console.log(timepicker);
+        
+        // console.log(input);
     }
 
     onChangeCustomerOrComments = e => {
