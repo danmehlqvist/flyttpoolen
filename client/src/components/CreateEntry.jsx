@@ -46,9 +46,9 @@ class CreateEntry extends Component {
                             <p>Start-tid</p>
                             <TimePicker
                                 // className="adjust-timepicker"
-                                readonly
+                                inputReadOnly
                                 // onClick={hideVirtualKeyboard()}
-                                onFocus={e=>{
+                                onFocus={e => {
                                     e.target.blur();
                                 }}
                                 allowEmpty={false}
@@ -83,7 +83,7 @@ class CreateEntry extends Component {
                         <div>
                             <p>Rast</p>
                             <TimePicker
-
+                                inputReadOnly
                                 // onFocus="blur();"
                                 allowEmpty={false}
                                 className="TimePicker"
@@ -157,7 +157,7 @@ class CreateEntry extends Component {
         // document.querySelector('.rc-time-picker-input').setAttribute('readonly','true');
         // document.querySelector('.rc-time-picker-input').setAttribute('readOnly','true');
         // console.log(timepicker);
-        
+
         // console.log(input);
     }
 
