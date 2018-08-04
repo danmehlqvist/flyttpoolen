@@ -1,3 +1,17 @@
 .Dashboard {
     text-align:center;
 }
+
+.Dashboard .chevronGrid{
+    display:flex;
+    justify-content: center;
+}
+
+.Dashboard .chevronGrid div{
+    padding-left:20px;
+    padding-right:20px;
+}
+
+.Dashboard p {
+    padding-top:0px;
+}
