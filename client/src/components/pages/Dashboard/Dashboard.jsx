@@ -51,10 +51,9 @@ class Dashboard extends Component {
                     <Chevron leftOrRight="left" handler={this._handleButtonLeft} />
                     <Chevron leftOrRight="right" handler={this._handleButtonRight} />
                 </div>
-                {/* {this._getStartAndEndDateOfWorkPeriod()} */}
                 <p>Arbetade timmar: {totalHoursWorked}</p>
                 <p style={{ marginBottom: "40px" }}>Arbetade dagar: {workingDays}</p>
-                <Link className="Link" to="/create-entry">Rapportera arbete</Link>
+                <Link className="big" to="/create-entry">Rapportera arbete</Link>
                 <WorkTable
                     data={this.props.reports}
                 />

@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 
 import './CreateEntry.css';
 import { saveReportAction } from '../../../actions/reportActions';
@@ -138,10 +138,14 @@ class CreateEntry extends Component {
                         name="comments"
                         onChange={this.onChangeCustomerOrComments}
                     />
+                    <br />
+                    <input type="submit" className="small" />
+                  
+                    <Link className="small" to="/dashboard">Tillbaka</Link>
 
-                    <br /> <input type="submit" />
                 </form>
-                <button onClick={() => this.props.history.push('/dashboard')}>Tillbaka</button>
+
+
             </div>
         )
     }

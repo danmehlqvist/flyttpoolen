@@ -55,13 +55,13 @@ class Register extends Component {
 
 
 
-                    <button onClick={this.onSubmit}>
+                    <button className="small" onClick={this.onSubmit}>
                         Skicka</button>
 
 
 
 
-                    <button
+                    <button className="small"
                         onClick={() => {
                             this.setState(() => ({
                                 name: '',
@@ -72,7 +72,7 @@ class Register extends Component {
                         }}
                     >Rensa</button>
 
-                    <Link to="/" className="button">Tillbaka</Link>
+                    <Link to="/" className="small">Tillbaka</Link>
 
                     <input style={{ display: "none" }} type="submit" />
                 </form>

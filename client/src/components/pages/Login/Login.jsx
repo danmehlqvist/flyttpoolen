@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropType from 'prop-types';
+import {Link} from 'react-router-dom';
 
 import './Login.css';
 import { loginUserAction } from '../../../actions/userActions';
@@ -36,17 +37,11 @@ class Login extends Component {
                         onChange={this.onChange}
                         error={this.state.errors.password}
                     />
-                    <button
-                        className="big"
-                        onClick={this.onSubmit}
-                    >Logga In</button>
-                    <button
-                        className="big"
-                        onClick={() => {
-                            this.props.history.push('/');
-                        }}
-                    >Avbryt</button>
-                    <input type="submit" style={{ display: "none" }} />
+               
+                    <input type="submit" className="big" value="Logga In"/>
+                    <br />
+                   <Link to="/" className="big">Avbryt</Link>
+               
                 </form>
             </div>
         )

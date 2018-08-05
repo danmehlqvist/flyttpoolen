@@ -9,62 +9,36 @@ h1 {
   font-size: 140%;
 }
 
-button, 
-input[type="submit"],
-a.button{
+.small {
   background: orange;
   border: 1px solid #333;
   font-size: 20px;
-  margin: 10px auto;
+  margin: 10px;
   padding: 10px;
   border-radius: 3px;
   transition: border 0.3s, background 0.3s;
-  margin-left:5px;
 }
 
-a{
-  text-decoration:none; 
-}
-
-a:visited,a:active {
-  color:black;
-}
-
-.big {
-  border: 2px solid #333;
-  font-size: 25px;
-  display: block;
-  border-radius: 5px;
-  font-weight: bold;
-  margin: 20px auto;
-}
-
-.small {
-  font-size:14px;
-  margin:0px;
-  padding:3px;
-}
-
-button:hover,
-button:active,
-input[type="submit"]:hover,
-input[type="submit"]:active,
-a.button:hover,
-a.button:active {
+.small:hover,
+.small:active{
   background: darkorange;
   border: 1px solid black;
 }
 
-button.big:hover,
-button.big:active {
-  background: darkorange;
-  border: 2px solid black;
+a {
+  text-decoration: none;
 }
 
-a.Link {
+a:visited,
+a:active {
+  color: black;
+}
+
+.big {
+  display: inline-block;
   background: orange;
   border: 1px solid #333;
-  font-size: 20px;
+  font-size: 25px;
   padding: 10px;
   border-radius: 3px;
   transition: border 0.3s, background 0.3s;
@@ -72,8 +46,8 @@ a.Link {
   text-decoration: none;
 }
 
-a.Link:hover,
-a.Link:active {
+.big:hover,
+.big:active {
   background: darkorange;
   border: 1px solid black;
 }

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import React from 'react'
+import {Link} from 'react-router-dom';
 
 import './Landing.css';
 
@@ -8,29 +9,12 @@ class Landing extends React.Component {
   render() {
     return (
       <div className="Landing">
-        <button
-          className="big"
-          onClick={
-            () => {
-              this.props.history.push('/login');
-            }
-          }
-        >Logga In!</button>
+        <Link to="/login" className="big">Logga In</Link>
+        <br />
+        <Link to="/register" className="big">Ny användare</Link>
 
-        <button
-        className="big"
-          onClick={
-            () => {
-              this.props.history.push('/register');
-            }
-          }
-        >Ny användare!</button>
       </div >
     )
-  }
-
-  newUserClick = () => {
-    this.props.history.push('/register');
   }
 
   componentWillMount() {
