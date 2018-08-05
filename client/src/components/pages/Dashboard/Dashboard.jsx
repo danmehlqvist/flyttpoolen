@@ -10,7 +10,6 @@ import { getReportsWithinGivenDatesAction } from '../../../actions/reportActions
 import WorkTable from './WorkTable/WorkTable';
 import Chevron from './Chevron/Chevron';
 
-// import { faClosedCaptioning } from '@fortawesome/free-solid-svg-icons';
 
 class Dashboard extends Component {
 
@@ -29,9 +28,9 @@ class Dashboard extends Component {
 
     render() {
 
-        const { startDate, endDate } = this._buildStartAndEndDateStrings();
-        this.props.getReportsWithinGivenDatesAction(startDate, endDate);
+        console.log('render()');
 
+        console.log(this._getNameOfMonth(this.state.start.month));
 
         let totalHoursWorked;
         let workingDays;
@@ -84,80 +83,89 @@ class Dashboard extends Component {
 
     componentWillMount = () => {
 
+        console.log('componentWillMount')
         // Calculate startDate and endDate
         const today = moment();
         const date = today.date();
         const month = today.month();
+        console.log('This is the current month: ', this._getNameOfMonth(month));
         const year = today.year();
 
-        let startDate;
-        let endDate;
+        let start;
+        let end;
 
         if (month === 0 && date <= 15) { //Early January
-            startDate = {
+            start = {
                 day: 16,
                 month: 11,
                 year: year - 1,
             }
-            endDate = {
+            end = {
                 day: 15,
                 month: 0,
                 year
             }
         } else if (month === 11 & date > 15) {
-            startDate = {
+            start = {
                 day: 16,
                 month: 12,
                 year
             }
-            endDate = {
+            end = {
                 day: 15,
                 month: 1,
                 year: year + 1
             }
         } else if (date > 15) {
-            startDate = {
+            start = {
                 day: 16,
-                month: month + 1,
+                month: month,
                 year: year
             }
-            endDate = {
+            end = {
                 day: 15,
-                month: month + 2,
+                month: month + 1,
                 year
             }
         } else {    //date <= 16
-            startDate = {
+            start = {
                 day: 16,
-                month: month,
+                month: month - 1,
                 year
             }
-            endDate = {
+            end = {
                 day: 15,
-                month: month + 1,
+                month: month,
                 year
             }
         }
 
+        console.log('This is the month that will be displayed as starting month: ', this._getNameOfMonth(start.month));
+        const stringifyNumber = (number) => number < 10 ? "0" + number.toString() : number.toString();
+        let startDate = stringifyNumber(start.year) + stringifyNumber(start.month+1) + stringifyNumber(16);
+        let endDate = stringifyNumber(end.year) + stringifyNumber(end.month+1) + stringifyNumber(15);
+
+        this.props.getReportsWithinGivenDatesAction(startDate, endDate);
         this.setState(() => ({
-            start: startDate,
-            end: endDate
+            start,
+            end
         }));
 
     }
-    // componentDidMount = () => {
-
-    //     if (Object.keys(this.props.reports).length === 0) {
-    //         const { startDate, endDate } = this._buildStartAndEndDateStrings();
-    //         this.props.getReportsWithinGivenDatesAction(startDate, endDate);
-    //     }
-    // }
 
     _handleButtonLeft = () => {
         const startMonth = this.state.start.month === 0 ? 11 : this.state.start.month - 1;
         const startYear = this.state.start.month === 0 ? this.state.start.year - 1 : this.state.start.year;
         const endMonth = this.state.end.month === 0 ? 11 : this.state.end.month - 1;
         const endYear = this.state.end.month === 0 ? this.state.end.year - 1 : this.state.end.year;
+
+        
+        const stringifyNumber = (number) => number < 10 ? "0" + number.toString() : number.toString();
+        let startDate = stringifyNumber(startYear) + stringifyNumber(startMonth+1) + stringifyNumber(16);
+        let endDate = stringifyNumber(endYear) + stringifyNumber(endMonth+1) + stringifyNumber(15);
+
+        this.props.getReportsWithinGivenDatesAction(startDate, endDate);
+
         this.setState((prevState) => ({
             start: {
                 ...prevState.start,
@@ -177,6 +185,14 @@ class Dashboard extends Component {
         const startYear = this.state.start.month === 11 ? this.state.start.year + 1 : this.state.start.year;
         const endMonth = this.state.end.month === 11 ? 0 : this.state.end.month + 1;
         const endYear = this.state.end.month === 11 ? this.state.end.year + 1 : this.state.end.year;
+
+        const stringifyNumber = (number) => number < 10 ? "0" + number.toString() : number.toString();
+
+        let startDate = stringifyNumber(startYear) + stringifyNumber(startMonth+1) + stringifyNumber(16);
+        let endDate = stringifyNumber(endYear) + stringifyNumber(endMonth+1) + stringifyNumber(15);
+
+        this.props.getReportsWithinGivenDatesAction(startDate, endDate);
+
         this.setState((prevState) => ({
             start: {
                 ...prevState.start,
@@ -191,16 +207,7 @@ class Dashboard extends Component {
         }));
     }
 
-    _buildStartAndEndDateStrings = () => {
-        const stringifyNumber = (number) => number < 10 ? "0" + number.toString() : number.toString();
-
-        let startDate = stringifyNumber(this.state.start.year) + stringifyNumber(this.state.start.month) + stringifyNumber(this.state.start.day);
-        let endDate = stringifyNumber(this.state.end.year) + stringifyNumber(this.state.end.month) + stringifyNumber(this.state.end.day);
-        return {
-            startDate,
-            endDate
-        };
-    }
+  
 }
 
 

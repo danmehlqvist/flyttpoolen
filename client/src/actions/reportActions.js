@@ -9,6 +9,7 @@ import {
 } from '../reducers/types';
 
 export const getReportsWithinGivenDatesAction = (startDate, endDate) => dispatch => {
+    console.log(`getReportsWithinGivenDatesAction: startDate: ${startDate} endDate: ${endDate}`)
     axios.get(`/api/reports?startDate=${startDate}&endDate=${endDate}`)
         .then(reports => {
             dispatch({
